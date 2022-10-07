@@ -15,7 +15,7 @@ pub fn calculate(route: Route) -> Json {
             // think in order to complete the assignment, I can pretend I have talked some strategy
             // over with some team, and we decided on logging and returning the error as json.
             warn!("Invalid flight route {:?}", err);
-            json(&err)
+            json(&format!("invalid flight route: {:?}", err))
         }
     }
 }

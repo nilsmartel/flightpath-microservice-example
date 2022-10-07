@@ -3,7 +3,7 @@ use std::collections::HashMap as Map;
 
 use crate::model::{Flight, Route};
 
-// #[derive(Debug, Serialize)]
+#[derive(Debug)]
 pub enum Error {
     UnclosedPath,
 }
@@ -15,28 +15,29 @@ pub fn calculate(route: Route) -> Result<Flight, Error> {
 
     // keys that can be reached via their value
     let mut destinations: Map<String, String> = Map::new();
-    
-    for (source, dest) in route {
+
+    for (mut source, mut dest) in route {
         loop {
             // does some path lead to source?
-            if let Some(newsource) = destinations.get(&source) {
+            if let Some(newsource) = destinations.get(&source.clone()).cloned() {
                 // then this path also leads to our destination!
 
                 destinations.remove(&source);
-                destinations[&dest] = newsource.clone();
+                destinations.insert(dest.clone(), newsource.clone());
 
-                sources[newsource] = dest.clone();
+                sources.insert(newsource.clone(), dest.clone());
                 source = newsource.clone();
                 continue;
             }
-            // deos some path start at our destination?
-            if let Some(newdestination) = sources.get(&dest) {
+
+            // does some path start at our destination?
+            if let Some(newdestination) = sources.get(&dest.clone()).cloned() {
                 // then we will replace our destination with the newdestination.
-            
+
                 sources.remove(&dest);
-                sources[&source] = newdestination.clone();
-                
-                destinations[newdestination] = source.clone();
+                sources.insert(source.clone(), newdestination.clone());
+
+                destinations.insert(newdestination.clone(), source.clone());
                 dest = newdestination.clone();
                 continue;
             }
@@ -44,8 +45,9 @@ pub fn calculate(route: Route) -> Result<Flight, Error> {
             // the path seems to be remote from the ones we've seen before.
             // We add it to our list.
 
-            sources[&source] = dest.clone();
-            destinations[&dest] = source;
+            sources.insert(source.clone(), dest.clone());
+            destinations.insert(dest.clone(), source.clone());
+            break;
         }
     }
 
@@ -53,7 +55,28 @@ pub fn calculate(route: Route) -> Result<Flight, Error> {
         return Err(Error::UnclosedPath);
     }
 
-    Ok(
-        sources.into_iter().next().unwrap()
-    )
+    Ok(sources.into_iter().next().unwrap())
+}
+
+#[cfg(test)]
+mod route_tests {
+    use super::*;
+
+    #[test]
+    fn correctness_tests() {
+        let route = "df ay ec ye cd"
+            .split(' ')
+            .map(|s| {
+                let mut s = s.chars();
+                let start = String::from(s.next().unwrap());
+                let end = String::from(s.next().unwrap());
+                (start, end)
+            })
+            .collect::<Route>();
+
+        assert_eq!(
+            calculate(route).unwrap(),
+            ("a".to_string(), "f".to_string())
+        );
+    }
 }
