@@ -1,10 +1,12 @@
-use log::warn;
+use log::{info, warn};
 
 use warp::reply::{json, Json};
 
 use crate::{logic, model::Route};
 
 pub fn calculate(route: Route) -> Json {
+    info!("request on /calculate");
+
     let flight = logic::calculate(route);
     match flight {
         Ok(flight) => json(&flight),

@@ -12,5 +12,9 @@ async fn main() {
         .and(warp::body::json())
         .map(handler::calculate);
 
-    warp::serve(calculate).run(([127, 0, 0, 1], 8080)).await;
+    let port = 8080;
+
+    log::info!("serving on port {port}");
+
+    warp::serve(calculate).run(([127, 0, 0, 1], port)).await;
 }
