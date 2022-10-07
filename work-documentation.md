@@ -12,3 +12,7 @@
 - 12:26 got rid of all String cloning, by using references in implementation of algorithm.
 
 - 12:34 implement more test cases
+
+- 12:49 written load intensive test cases and improve logging.
+        A microservice deserves a little logging.
+        It isn't strictly expected, but I think one will find it invaluable to have.
