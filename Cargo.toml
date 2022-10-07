@@ -9,4 +9,4 @@ edition = "2021"
 tokio = { version = "1", features = ["full"] }
 warp = "0.3"
 serde_derive = "1.0.145"                  # Macros 1.1 implementation of #[derive(Serialize, Deserialize)]
-log = "0.4.17"                  # A lightweight logging facade for Rust 
+log = "0.4.17"                  # A lightweight logging facade for Rust
