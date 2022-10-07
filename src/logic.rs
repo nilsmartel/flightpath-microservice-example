@@ -104,7 +104,10 @@ mod route_tests {
         ];
 
         for (inp, out) in cases {
-            let route = inp.into_iter().map(|(a, b)| (String::from(a), String::from(b))).collect();
+            let route = inp
+                .into_iter()
+                .map(|(a, b)| (String::from(a), String::from(b)))
+                .collect();
 
             let flight = calculate(route).expect("to find valid route");
             let out = (out.0.to_string(), out.1.to_string());
