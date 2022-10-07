@@ -9,7 +9,7 @@ pub enum Error {
 }
 
 /// Compiles all flights into one source and one destination.
-/// runs in O(1)
+/// runs in O(n)
 pub fn calculate(route: Route) -> Result<Flight, Error> {
     let mut sources: Map<&String, &String> = Map::new();
 

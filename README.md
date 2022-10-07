@@ -33,3 +33,7 @@ curl -X GET localhost:8080/calculate \
     -H "Content-Type: application/json" \
     -d '[["IND", "EWR"], ["SFO", "ATL"], ["GSO", "IND"], ["ATL", "GSO"]]'
 ```
+
+#### Details
+
+The algorithm has a runtime of O(n), so don't be afraid to try this with big workloads
