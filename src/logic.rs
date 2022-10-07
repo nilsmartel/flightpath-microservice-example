@@ -58,7 +58,11 @@ pub fn calculate(route: Route) -> Result<Flight, Error> {
         return Err(Error::UnclosedPath);
     }
 
-    Ok(sources.into_iter().next().map(|(a, b)| (a.clone(), b.clone())).unwrap())
+    Ok(sources
+        .into_iter()
+        .next()
+        .map(|(a, b)| (a.clone(), b.clone()))
+        .unwrap())
 }
 
 #[cfg(test)]
@@ -81,5 +85,30 @@ mod route_tests {
             calculate(route).unwrap(),
             ("a".to_string(), "f".to_string())
         );
+    }
+
+    #[test]
+    fn paper_example_tests() {
+        let cases = [
+            (vec![("SFO", "EWR")], ("SFO", "EWR")),
+            (vec![("ATL", "EWR"), ("SFO", "ATL")], ("SFO", "EWR")),
+            (
+                vec![
+                    ("IND", "EWR"),
+                    ("SFO", "ATL"),
+                    ("GSO", "IND"),
+                    ("ATL", "GSO"),
+                ],
+                ("SFO", "EWR"),
+            ),
+        ];
+
+        for (inp, out) in cases {
+            let route = inp.into_iter().map(|(a, b)| (String::from(a), String::from(b))).collect();
+
+            let flight = calculate(route).expect("to find valid route");
+            let out = (out.0.to_string(), out.1.to_string());
+            assert_eq!(flight, out)
+        }
     }
 }
