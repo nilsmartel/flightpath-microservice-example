@@ -1,3 +1,5 @@
+# send ten thousand calls in parrallel against the endpoint.
+
 for i in $(seq 10000 )
 do
     curl -X GET localhost:8080/calculate \
