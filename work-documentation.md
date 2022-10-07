@@ -6,3 +6,7 @@
 
 - 12:00am create first implementation of O(1) algorithm.
           A much, much simpler O(n²) algorithm exists, though as I can't ask about requirements, I decided to pretend I was told that n is usally very, very big. I am not sure if people taking thousands of flights a day makes sense, but here we are.
+
+- 12:21am have first passing test. Thinking about cheap optimisations
+
+- 12:26am got rid of all String cloning, by using references in implementation of algorithm.
