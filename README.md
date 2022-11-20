@@ -38,7 +38,7 @@ curl -X GET localhost:8080/calculate \
 
 #### Details
 
-The algorithm has a runtime of $ O(n) $.
+The algorithm has a runtime of O(n).
 This behaviour is archieved by utilizing 2 hashmaps, which always store the "next expected step" in the algorithm.
 
 A much more obvious solution would be to
@@ -48,4 +48,5 @@ A much more obvious solution would be to
 - repeate on the now smaller list, until only one element is left
 
 Both a guaranteed to complete (the second one is just iterating through a list, the second one works on ever smaller lists and you can't take away from positive integers indefinitly).
-The trivial solution would terminate in $ O(n²) $ time
+The trivial solution would terminate in O(n²)
+time
